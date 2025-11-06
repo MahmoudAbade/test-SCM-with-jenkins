@@ -1,3 +1,4 @@
+// Jenkinsfile
 def gv
 
 pipeline {
@@ -15,9 +16,10 @@ pipeline {
         )
     }
     stages {
-        stage('init') {
+        stage('Init') {
             steps {
                 script {
+                    // Load the functions from the file
                     gv = load "scripts.groovy"
                 }
             }
@@ -25,9 +27,10 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    gv.buildApp()
+                    // Pass the parameter explicitly
+                    gv.buildApp(params.BRANCH_VERSION)
                 }
-                // Add your build steps here
+                // Add your actual build steps here
             }
         }
         stage('Test') {
@@ -36,17 +39,19 @@ pipeline {
             }
             steps {
                 script {
-                    gv.testApp()
+                    // Pass the parameter explicitly
+                    gv.testApp(params.BRANCH_VERSION)
                 }
-                // Add your test steps here
+                // Add your actual test steps here
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    gv.deployApp()
+                    // Pass the parameter explicitly
+                    gv.deployApp(params.BRANCH_VERSION)
                 }
-                // Add your deploy steps here
+                // Add your actual deploy steps here
             }
         }
     }
